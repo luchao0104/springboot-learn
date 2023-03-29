@@ -1,16 +1,13 @@
-name: Run Gradle on PRs
-on: push
+name: Gradle Build
+
+on: [push]
+
 jobs:
-  build-gradle-project:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2 #拉取项目文件
-      - name: Set up JDK 8 #配置java环境
-        uses: actions/setup-java@v2
+      - uses: actions/checkout@v2
+      - name: Build with Gradle
+        uses: eskatos/gradle-build-action@v1.3.1
         with:
-          java-version: '8'
-          distribution: 'temurin'
-      - name: Grant execute permission for gradlew  #更改脚本权限
-        run: chmod +x gradlew
-      - name: Build with Gradle  #开始打包 -x test 跳过测试
-        run: ./gradlew build -x test
+          args: build
